@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prohttp/models/dogModel.dart';
 import 'package:prohttp/provider/mainPro.dart';
 import 'package:prohttp/utils/colors.dart';
 import 'package:prohttp/utils/fonts.dart';
@@ -173,8 +174,26 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(
-              height: returnScreenSize(context, height: false) * 0.02,
+              height: returnScreenSize(context, height: false) * 0.05,
             ),
+
+            Selector<MainPro, List>(
+                selector: (con, main) => main.dogImageList,
+                builder: (con, data, child) => data.isNotEmpty
+                    ? Container(
+                        width: double.infinity,
+                        height: 300,
+                        child: Image.network(data[0].message))
+                    : Container()),
+
+            Consumer<MainPro>(
+                builder: (context, main, _) => main.dogImageList.isNotEmpty
+                    ? Container(
+                        width: double.infinity,
+                        height: 300,
+                        child: Image.network(main.dogImageList[0].message))
+                    : Container()),
+
             Container(
               width: double.infinity,
               height: returnScreenSize(context, height: true) * 0.30,
